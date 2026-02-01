@@ -14,3 +14,4 @@ for vrstica in rezultati:
     print(vrstica)
 kazalec.close()
 povezava.close()
+
