@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block naslov %}Moji nakupi{% endblock %}
+
+{% block vsebina %}
+  <h1>Zgodovina mojih nakupov</h1>
+
+  {% if narocila %}
+    <table>
+      <thead>
+        <tr>
+          <th>Št. naročila</th>
+          <th>Datum</th>
+          <th>Št. artiklov</th>
+          <th>Skupna cena</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for narocilo in narocila %}
+          <tr>
+            <td>{{ narocilo['order_id'] }}</td>
+            <td>{{ narocilo['datum'] }}</td>
+            <td>{{ narocilo['stevilo_artiklov'] }}</td>
+            <td>{{ narocilo['skupna_cena'] | round(2) }} EUR</td>
+            <td>{{ narocilo['status'] }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="prazno">Zaenkrat še nimaš zaključenih nakupov.</p>
+  {% endif %}
+
+  <p><a href="{{ url_for('index') }}">&larr; Nazaj na izdelke</a></p>
+{% endblock %}

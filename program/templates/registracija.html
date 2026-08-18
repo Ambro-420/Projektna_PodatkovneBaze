@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block naslov %}Registracija{% endblock %}
+
+{% block vsebina %}
+  <h1>Registracija kupca</h1>
+
+  <form method="post" class="kartica" style="max-width: 420px;">
+    <label>
+      Uporabniško ime:
+      <input type="text" name="uporabnisko_ime" value="{{ uporabnisko_ime }}" minlength="3" required>
+    </label>
+    <label>
+      E-pošta:
+      <input type="email" name="email" value="{{ email }}">
+    </label>
+    <label>
+      Geslo:
+      <input type="password" name="geslo" minlength="5" required>
+    </label>
+    <label>
+      Ponovi geslo:
+      <input type="password" name="geslo_ponovno" minlength="5" required>
+    </label>
+    <button class="gumb" type="submit">Ustvari račun</button>
+  </form>
+
+  <p class="prazno">Nov račun dobi vlogo kupca. Vlogo trgovca lahko dodeli obstoječi trgovec v svojem vmesniku.</p>
+{% endblock %}

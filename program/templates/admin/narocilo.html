@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block naslov %}Naročilo {{ narocilo['order_id'] }}{% endblock %}
+
+{% block vsebina %}
+  <h1>Naročilo št. {{ narocilo['order_id'] }}</h1>
+
+  <div class="kartica">
+    <p><strong>Datum:</strong> {{ narocilo['datum'] }}</p>
+    <p><strong>Kupec:</strong> {{ narocilo['uporabnisko_ime'] or narocilo['ime_kupca'] or 'Gost' }}</p>
+    <p><strong>Znesek:</strong> {{ narocilo['skupna_cena'] | round(2) }} EUR</p>
+    <form method="post" action="{{ url_for('admin_status_narocila', order_id=narocilo['order_id']) }}">
+      <input type="hidden" name="naprej" value="{{ url_for('admin_narocilo', order_id=narocilo['order_id']) }}">
+      <label style="max-width: 240px;">
+        Status:
+        <select name="status">
+          {% for status in statusi %}
+            <option value="{{ status }}" {% if status == narocilo['status'] %}selected{% endif %}>{{ status }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <button class="gumb" type="submit">Shrani status</button>
+    </form>
+  </div>
+
+  <div class="kartica">
+    <div class="naslov">Kupljeni izdelki</div>
+    <table>
+      <thead>
+        <tr><th>Izdelek</th><th>Cena ob nakupu</th><th>Količina</th><th>Skupaj</th></tr>
+      </thead>
+      <tbody>
+        {% for postavka in narocilo['postavke'] %}
+          <tr>
+            <td>{{ postavka['naziv_proizvoda'] }}</td>
+            <td>{{ postavka['cena'] | round(2) }} EUR</td>
+            <td>{{ postavka['kolicina'] }}</td>
+            <td>{{ postavka['skupaj'] | round(2) }} EUR</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <p><a href="{{ url_for('admin_narocila') }}">&larr; Nazaj na naročila</a></p>
+{% endblock %}

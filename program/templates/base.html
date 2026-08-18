@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="sl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block naslov %}Trgovina{% endblock %}</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        background: #f4f6f8;
+        color: #222;
+      }
+      .vsebina { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+
+      /* Glava in navigacija */
+      .glava {
+        background: #1f3b57;
+        color: #fff;
+        padding: 0.9rem 1.5rem;
+      }
+      .glava--trgovec { background: #33474d; }
+      .glava-vrstica {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .logo { font-size: 1.25rem; font-weight: bold; }
+      .logo span { font-weight: normal; opacity: 0.75; font-size: 0.9rem; }
+      .navigacija { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+      .navigacija a, .navigacija button { font-size: 0.9rem; }
+
+      /* Gumbi */
+      .gumb {
+        display: inline-block;
+        padding: 0.45rem 0.9rem;
+        border: none;
+        border-radius: 4px;
+        background: #2c9e6b;
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      .gumb:hover { filter: brightness(1.08); }
+      .gumb--siv { background: #5b6b78; }
+      .gumb--rdec { background: #c0483f; }
+      .gumb--preklop { background: #e0a325; color: #1c1c1c; font-weight: bold; }
+      .gumb--majhen { padding: 0.25rem 0.55rem; font-size: 0.8rem; }
+
+      /* Kartice in tabele */
+      .kartica {
+        background: #fff;
+        border: 1px solid #e0e4e8;
+        border-radius: 6px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+      .naslov { font-size: 1.1rem; font-weight: bold; margin-bottom: 0.3rem; }
+      table { width: 100%; border-collapse: collapse; background: #fff; }
+      th, td { padding: 0.6rem; border: 1px solid #e0e4e8; text-align: left; font-size: 0.92rem; }
+      th { background: #eef1f4; }
+
+      /* Sporočila */
+      .sporocilo { padding: 0.7rem 1rem; border-radius: 4px; margin-bottom: 0.6rem; }
+      .sporocilo--uspeh { background: #dff3e6; border: 1px solid #9ed7b6; }
+      .sporocilo--napaka { background: #fbe3e1; border: 1px solid #e8a9a3; }
+
+      /* Obrazci */
+      label { display: block; margin-bottom: 0.6rem; font-size: 0.9rem; }
+      input[type="text"], input[type="number"], input[type="password"],
+      input[type="email"], select, textarea {
+        width: 100%;
+        padding: 0.45rem;
+        border: 1px solid #c6ccd2;
+        border-radius: 4px;
+        font-size: 0.92rem;
+      }
+      .vrstica-polj { display: flex; flex-wrap: wrap; gap: 1rem; }
+      .vrstica-polj > * { flex: 1 1 200px; }
+      .vgrajen-obrazec { display: inline; }
+
+      /* Ostalo */
+      .znacka { padding: 0.15rem 0.5rem; border-radius: 10px; font-size: 0.78rem; }
+      .znacka--opozorilo { background: #fdf0d0; border: 1px solid #e6c877; }
+      .znacka--nevarno { background: #fbe3e1; border: 1px solid #e8a9a3; }
+      .znacka--ok { background: #dff3e6; border: 1px solid #9ed7b6; }
+      .stevci { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1rem; }
+      .stevec { flex: 1 1 150px; background: #fff; border: 1px solid #e0e4e8; border-radius: 6px; padding: 0.9rem; }
+      .stevec .vrednost { font-size: 1.5rem; font-weight: bold; }
+      .stevec .oznaka { font-size: 0.82rem; color: #5b6b78; }
+      .precrtano { text-decoration: line-through; color: #a00; }
+      .prazno { color: #5b6b78; font-style: italic; }
+    </style>
+  </head>
+  <body>
+    <header class="glava {% if je_trgovec and request.path.startswith('/admin') %}glava--trgovec{% endif %}">
+      <div class="glava-vrstica">
+        <div class="logo">
+          {% if request.path.startswith('/admin') %}
+            Upravljanje trgovine <span>pogled trgovca</span>
+          {% else %}
+            Naša trgovina <span>pogled kupca</span>
+          {% endif %}
+        </div>
+        <nav class="navigacija">
+          {% if request.path.startswith('/admin') %}
+            <a class="gumb gumb--siv" href="{{ url_for('admin_nadzorna_plosca') }}">Nadzorna plošča</a>
+            <a class="gumb gumb--siv" href="{{ url_for('admin_proizvodi') }}">Izdelki</a>
+            <a class="gumb gumb--siv" href="{{ url_for('admin_kategorije') }}">Kategorije in znamke</a>
+            <a class="gumb gumb--siv" href="{{ url_for('admin_narocila') }}">Naročila</a>
+            <a class="gumb gumb--siv" href="{{ url_for('admin_uporabniki') }}">Uporabniki</a>
+            <a class="gumb gumb--preklop" href="{{ url_for('index') }}">Poglej stran kupca &rarr;</a>
+          {% else %}
+            <a class="gumb gumb--siv" href="{{ url_for('index') }}">Izdelki</a>
+            <a class="gumb" href="{{ url_for('voziček') }}">
+              Voziček{% if stevilo_artiklov > 0 %} ({{ stevilo_artiklov }}){% endif %}
+            </a>
+            {% if uporabnik %}
+              <a class="gumb gumb--siv" href="{{ url_for('moji_nakupi') }}">Moji nakupi</a>
+            {% endif %}
+            {% if je_trgovec %}
+              <a class="gumb gumb--preklop" href="{{ url_for('admin_nadzorna_plosca') }}">&larr; Nazaj v upravljanje</a>
+            {% endif %}
+          {% endif %}
+
+          {% if uporabnik %}
+            <a class="gumb gumb--siv" href="{{ url_for('odjava') }}">Odjava ({{ uporabnik['uporabnisko_ime'] }})</a>
+          {% else %}
+            <a class="gumb gumb--siv" href="{{ url_for('prijava') }}">Prijava</a>
+            <a class="gumb gumb--siv" href="{{ url_for('registracija') }}">Registracija</a>
+          {% endif %}
+        </nav>
+      </div>
+    </header>
+
+    <main class="vsebina">
+      {% with sporocila = get_flashed_messages(with_categories=true) %}
+        {% for kategorija, sporocilo in sporocila %}
+          <div class="sporocilo sporocilo--{{ kategorija }}">{{ sporocilo }}</div>
+        {% endfor %}
+      {% endwith %}
+
+      {% block vsebina %}{% endblock %}
+    </main>
+  </body>
+</html>

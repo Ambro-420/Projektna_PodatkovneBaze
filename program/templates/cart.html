@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block naslov %}Voziček{% endblock %}
+
+{% block vsebina %}
+  <h1>Voziček</h1>
+
+  {% if artikli %}
+    <table>
+      <thead>
+        <tr>
+          <th>Izdelek</th>
+          <th>Cena</th>
+          <th>Količina</th>
+          <th>Skupaj</th>
+          <th>Akcija</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for artikel in artikli %}
+          <tr>
+            <td>{{ artikel['naziv'] }}</td>
+            <td>{{ artikel['cena'] | round(2) }} EUR</td>
+            <td>
+              <form method="post" action="{{ url_for('posodobi_voziček', proizvod_id=artikel['product_id']) }}">
+                <input type="number" name="kolicina" value="{{ artikel['kolicina'] }}"
+                       min="1" max="{{ artikel['zaloga'] }}" style="width: 5rem;">
+                <button class="gumb gumb--majhen gumb--siv" type="submit">Posodobi</button>
+              </form>
+            </td>
+            <td>{{ artikel['skupaj'] | round(2) }} EUR</td>
+            <td>
+              <form method="post" action="{{ url_for('odstrani_iz_vozička', proizvod_id=artikel['product_id']) }}">
+                <button class="gumb gumb--rdec gumb--majhen" type="submit">Odstrani</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="kartica" style="margin-top: 1rem;">
+      <p><strong>Skupna cena:</strong> {{ skupno | round(2) }} EUR</p>
+      <form method="post" action="{{ url_for('zakljuci_nakup') }}">
+        {% if not uporabnik %}
+          <label style="max-width: 320px;">
+            Ime kupca (nakup brez računa):
+            <input type="text" name="ime_kupca" placeholder="npr. Janez Novak">
+          </label>
+        {% else %}
+          <p>Nakup bo shranjen v zgodovino računa <strong>{{ uporabnik['uporabnisko_ime'] }}</strong>.</p>
+        {% endif %}
+        <button class="gumb" type="submit">Zaključi nakup</button>
+      </form>
+    </div>
+  {% else %}
+    <p class="prazno">Voziček je prazen.</p>
+  {% endif %}
+
+  <p><a href="{{ url_for('index') }}">&larr; Nazaj na izdelke</a></p>
+{% endblock %}

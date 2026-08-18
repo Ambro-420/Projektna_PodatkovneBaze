@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block naslov %}Prijava{% endblock %}
+
+{% block vsebina %}
+  <h1>Prijava</h1>
+
+  <form method="post" class="kartica" style="max-width: 420px;">
+    <input type="hidden" name="naprej" value="{{ request.args.get('naprej', '') }}">
+    <label>
+      Uporabniško ime:
+      <input type="text" name="uporabnisko_ime" value="{{ uporabnisko_ime }}" required>
+    </label>
+    <label>
+      Geslo:
+      <input type="password" name="geslo" required>
+    </label>
+    <button class="gumb" type="submit">Prijavi se</button>
+  </form>
+
+  <div class="kartica" style="max-width: 420px;">
+    <p>Še nimaš računa? <a href="{{ url_for('registracija') }}">Registriraj se</a>.</p>
+    <p class="prazno">
+      Privzeti račun trgovca za preizkus: uporabniško ime <strong>trgovec</strong>, geslo <strong>trgovec123</strong>.
+    </p>
+  </div>
+{% endblock %}

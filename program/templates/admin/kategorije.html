@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block naslov %}Kategorije in znamke{% endblock %}
+
+{% block vsebina %}
+  <h1>Kategorije in znamke</h1>
+
+  <div class="vrstica-polj">
+    <div class="kartica">
+      <div class="naslov">Kategorije</div>
+      <form method="post" action="{{ url_for('admin_kategorije') }}">
+        <div class="vrstica-polj">
+          <label>
+            Nova kategorija:
+            <input type="text" name="naziv" placeholder="npr. Zamrznjena hrana" required>
+          </label>
+          <label style="flex: 0 0 auto; align-self: flex-end;">
+            <button class="gumb" type="submit">+ Dodaj</button>
+          </label>
+        </div>
+      </form>
+
+      <table>
+        <thead>
+          <tr><th>Naziv</th><th>Izdelkov</th><th>Akcija</th></tr>
+        </thead>
+        <tbody>
+          {% for kategorija in kategorije %}
+            <tr>
+              <td>{{ kategorija['naziv'] }}</td>
+              <td>{{ kategorija['stevilo_proizvodov'] }}</td>
+              <td>
+                {% if kategorija['stevilo_proizvodov'] == 0 %}
+                  <form method="post" action="{{ url_for('admin_izbrisi_kategorijo', category_id=kategorija['category_id']) }}">
+                    <button class="gumb gumb--rdec gumb--majhen" type="submit">Izbriši</button>
+                  </form>
+                {% else %}
+                  <span class="prazno">v uporabi</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="kartica">
+      <div class="naslov">Znamke</div>
+      <form method="post" action="{{ url_for('admin_dodaj_znamko') }}">
+        <div class="vrstica-polj">
+          <label>
+            Nova znamka:
+            <input type="text" name="naziv" placeholder="npr. Domača kmetija" required>
+          </label>
+          <label style="flex: 0 0 auto; align-self: flex-end;">
+            <button class="gumb" type="submit">+ Dodaj</button>
+          </label>
+        </div>
+      </form>
+
+      <table>
+        <thead>
+          <tr><th>Naziv</th><th>Izdelkov</th><th>Akcija</th></tr>
+        </thead>
+        <tbody>
+          {% for znamka in znamke %}
+            <tr>
+              <td>{{ znamka['naziv'] }}</td>
+              <td>{{ znamka['stevilo_proizvodov'] }}</td>
+              <td>
+                {% if znamka['stevilo_proizvodov'] == 0 %}
+                  <form method="post" action="{{ url_for('admin_izbrisi_znamko', brand_id=znamka['brand_id']) }}">
+                    <button class="gumb gumb--rdec gumb--majhen" type="submit">Izbriši</button>
+                  </form>
+                {% else %}
+                  <span class="prazno">v uporabi</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

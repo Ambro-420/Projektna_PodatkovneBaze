@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block naslov %}{% if je_nov %}Nov izdelek{% else %}Uredi izdelek{% endif %}{% endblock %}
+
+{% set v_naziv = (proizvod.get('naziv_proizvoda') or proizvod.get('naziv') or '') if proizvod else '' %}
+{% set v_opis = (proizvod.get('opis') or '') if proizvod else '' %}
+{% set v_koda = (proizvod.get('koda') or '') if proizvod else '' %}
+{% set v_cena = (proizvod.get('cena') if proizvod is not none and proizvod.get('cena') is not none else '') %}
+{% set v_zaloga = (proizvod.get('zaloga') if proizvod is not none and proizvod.get('zaloga') is not none else 0) %}
+{% set v_kategorija = (proizvod.get('category_id') or '') if proizvod else '' %}
+{% set v_znamka = (proizvod.get('brand_id') or '') if proizvod else '' %}
+
+{% block vsebina %}
+  <h1>{% if je_nov %}Dodaj nov izdelek{% else %}Uredi izdelek{% endif %}</h1>
+
+  <form method="post" class="kartica" style="max-width: 720px;"
+        action="{% if je_nov %}{{ url_for('admin_nov_proizvod') }}{% else %}{{ url_for('admin_uredi_proizvod', proizvod_id=proizvod_id) }}{% endif %}">
+
+    <label>
+      Naziv izdelka:
+      <input type="text" name="naziv" value="{{ v_naziv }}" placeholder="npr. Mleko 1L" required>
+    </label>
+
+    <label>
+      Opis:
+      <textarea name="opis" rows="3" placeholder="Kratek opis, ki ga vidi kupec">{{ v_opis }}</textarea>
+    </label>
+
+    <div class="vrstica-polj">
+      <label>
+        Koda izdelka:
+        <input type="text" name="koda" value="{{ v_koda }}" placeholder="npr. MLE-006">
+      </label>
+      <label>
+        Cena (EUR):
+        <input type="text" name="cena" value="{{ v_cena }}" placeholder="0.00" required>
+      </label>
+      <label>
+        Zaloga (kosov):
+        <input type="number" name="zaloga" value="{{ v_zaloga }}" min="0">
+      </label>
+    </div>
+
+    <div class="vrstica-polj">
+      <label>
+        Kategorija:
+        <select name="category_id">
+          <option value="">— izberi —</option>
+          {% for kategorija in kategorije %}
+            <option value="{{ kategorija['category_id'] }}"
+              {% if v_kategorija|string == kategorija['category_id']|string %}selected{% endif %}>
+              {{ kategorija['naziv'] }}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>
+        … ali vpiši novo kategorijo:
+        <input type="text" name="nova_kategorija" placeholder="npr. Zamrznjena hrana">
+      </label>
+    </div>
+
+    <div class="vrstica-polj">
+      <label>
+        Znamka:
+        <select name="brand_id">
+          <option value="">— izberi —</option>
+          {% for znamka in znamke %}
+            <option value="{{ znamka['brand_id'] }}"
+              {% if v_znamka|string == znamka['brand_id']|string %}selected{% endif %}>
+              {{ znamka['naziv'] }}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>
+        … ali vpiši novo znamko:
+        <input type="text" name="nova_znamka" placeholder="npr. Domača kmetija">
+      </label>
+    </div>
+
+    <p class="prazno">Če vpišeš novo kategorijo ali znamko, se ta samodejno doda v bazo in ima prednost pred izbiro iz seznama.</p>
+
+    <button class="gumb" type="submit">{% if je_nov %}Dodaj izdelek{% else %}Shrani spremembe{% endif %}</button>
+    <a class="gumb gumb--siv" href="{{ url_for('admin_proizvodi') }}">Prekliči</a>
+  </form>
+{% endblock %}

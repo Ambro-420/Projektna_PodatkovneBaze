@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block naslov %}Nadzorna plošča trgovca{% endblock %}
+
+{% block vsebina %}
+  <h1>Nadzorna plošča</h1>
+
+  <div class="stevci">
+    <div class="stevec">
+      <div class="vrednost">{{ povzetek['stevilo_proizvodov'] }}</div>
+      <div class="oznaka">izdelkov v ponudbi</div>
+    </div>
+    <div class="stevec">
+      <div class="vrednost">{{ povzetek['stevilo_kategorij'] }}</div>
+      <div class="oznaka">kategorij</div>
+    </div>
+    <div class="stevec">
+      <div class="vrednost">{{ povzetek['stevilo_znamk'] }}</div>
+      <div class="oznaka">znamk</div>
+    </div>
+    <div class="stevec">
+      <div class="vrednost">{{ povzetek['stevilo_narocil'] }}</div>
+      <div class="oznaka">naročil</div>
+    </div>
+    <div class="stevec">
+      <div class="vrednost">{{ povzetek['promet'] | round(2) }} EUR</div>
+      <div class="oznaka">skupni promet</div>
+    </div>
+    <div class="stevec">
+      <div class="vrednost">{{ povzetek['stevilo_uporabnikov'] }}</div>
+      <div class="oznaka">registriranih uporabnikov</div>
+    </div>
+  </div>
+
+  <div class="kartica">
+    <div class="naslov">Hitre akcije</div>
+    <a class="gumb" href="{{ url_for('admin_nov_proizvod') }}">+ Dodaj nov izdelek</a>
+    <a class="gumb gumb--siv" href="{{ url_for('admin_kategorije') }}">Dodaj kategorijo ali znamko</a>
+    <a class="gumb gumb--siv" href="{{ url_for('admin_narocila') }}">Preglej naročila</a>
+    <a class="gumb gumb--preklop" href="{{ url_for('index') }}">Poglej stran kupca &rarr;</a>
+  </div>
+
+  <div class="kartica">
+    <div class="naslov">
+      Zaloga, ki potrebuje pozornost
+      ({{ povzetek['brez_zaloge'] }} brez zaloge, {{ povzetek['nizka_zaloga'] }} z nizko zalogo)
+    </div>
+    {% if nizka_zaloga %}
+      <table>
+        <thead>
+          <tr>
+            <th>Izdelek</th>
+            <th>Kategorija</th>
+            <th>Zaloga</th>
+            <th>Dopolni zalogo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for proizvod in nizka_zaloga %}
+            <tr>
+              <td>{{ proizvod['naziv_proizvoda'] }}</td>
+              <td>{{ proizvod['kategorija'] }}</td>
+              <td>
+                {% if proizvod['zaloga'] == 0 %}
+                  <span class="znacka znacka--nevarno">ni na zalogi</span>
+                {% else %}
+                  <span class="znacka znacka--opozorilo">{{ proizvod['zaloga'] }}</span>
+                {% endif %}
+              </td>
+              <td>
+                <form method="post" action="{{ url_for('admin_spremeni_zalogo', proizvod_id=proizvod['product_id']) }}">
+                  <input type="hidden" name="naprej" value="{{ url_for('admin_nadzorna_plosca') }}">
+                  <input type="number" name="sprememba" value="10" style="width: 5rem;">
+                  <button class="gumb gumb--majhen" type="submit">Dodaj na zalogo</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="prazno">Vsi izdelki imajo zadostno zalogo.</p>
+    {% endif %}
+  </div>
+
+  <div class="kartica">
+    <div class="naslov">Najbolje prodajani izdelki</div>
+    {% if najbolj_prodajani %}
+      <table>
+        <thead>
+          <tr><th>Izdelek</th><th>Prodanih kosov</th><th>Promet</th></tr>
+        </thead>
+        <tbody>
+          {% for vrstica in najbolj_prodajani %}
+            <tr>
+              <td>{{ vrstica['naziv_proizvoda'] }}</td>
+              <td>{{ vrstica['prodanih'] }}</td>
+              <td>{{ vrstica['promet'] | round(2) }} EUR</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="prazno">Ni še nobene prodaje.</p>
+    {% endif %}
+  </div>
+
+  <div class="kartica">
+    <div class="naslov">Zadnja naročila</div>
+    {% if zadnja_narocila %}
+      <table>
+        <thead>
+          <tr><th>Št.</th><th>Datum</th><th>Kupec</th><th>Znesek</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          {% for narocilo in zadnja_narocila %}
+            <tr>
+              <td><a href="{{ url_for('admin_narocilo', order_id=narocilo['order_id']) }}">{{ narocilo['order_id'] }}</a></td>
+              <td>{{ narocilo['datum'] }}</td>
+              <td>{{ narocilo['uporabnisko_ime'] or narocilo['ime_kupca'] or 'Gost' }}</td>
+              <td>{{ narocilo['skupna_cena'] | round(2) }} EUR</td>
+              <td>{{ narocilo['status'] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="prazno">Naročil še ni.</p>
+    {% endif %}
+  </div>
+{% endblock %}

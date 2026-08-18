@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block naslov %}Naši izdelki{% endblock %}
+
+{% block vsebina %}
+  <h1>Naši izdelki</h1>
+
+  {% if je_trgovec %}
+    <div class="kartica">
+      Trenutno si prijavljen kot trgovec in gledaš stran tako, kot jo vidijo kupci.
+      <a class="gumb gumb--preklop" href="{{ url_for('admin_nadzorna_plosca') }}">Nazaj v upravljanje</a>
+    </div>
+  {% endif %}
+
+  <form method="get" class="kartica" id="filter-obrazec">
+    <div class="vrstica-polj">
+      <label>
+        Iskalni niz:
+        <input type="text" id="iskalni-niz" name="iskalno" value="{{ iskalno }}" placeholder="Išči po imenu ali opisu">
+      </label>
+      <label>
+        Kategorija:
+        <select name="kategorija_id" id="kategorija-id">
+          <option value="">Vse kategorije</option>
+          {% for kategorija in kategorije %}
+            <option value="{{ kategorija['category_id'] }}"
+              {% if izbrana_kategorija and kategorija['category_id']|string == izbrana_kategorija|string %}selected{% endif %}>
+              {{ kategorija['naziv'] }}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>
+        Razvrsti:
+        <select name="sortiraj" id="sortiraj">
+          <option value="naziv_narascajoce" {% if sortiraj == 'naziv_narascajoce' %}selected{% endif %}>Naziv A–Z</option>
+          <option value="naziv_padajoce" {% if sortiraj == 'naziv_padajoce' %}selected{% endif %}>Naziv Z–A</option>
+          <option value="cena_narascajoce" {% if sortiraj == 'cena_narascajoce' %}selected{% endif %}>Cena naraščajoče</option>
+          <option value="cena_padajoce" {% if sortiraj == 'cena_padajoce' %}selected{% endif %}>Cena padajoče</option>
+        </select>
+      </label>
+    </div>
+  </form>
+
+  <script>
+    const obrazec = document.getElementById('filter-obrazec');
+    const iskalniNiz = document.getElementById('iskalni-niz');
+    const kategorija = document.getElementById('kategorija-id');
+    const sortiraj = document.getElementById('sortiraj');
+
+    kategorija.addEventListener('change', () => obrazec.submit());
+    sortiraj.addEventListener('change', () => obrazec.submit());
+
+    let timeoutId;
+    iskalniNiz.addEventListener('input', () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => obrazec.submit(), 300);
+    });
+  </script>
+
+  {% if not proizvodi %}
+    <p class="prazno">Za izbrane pogoje ni najdenih izdelkov.</p>
+  {% endif %}
+
+  {% for proizvod in proizvodi %}
+    <div class="kartica">
+      <div class="naslov">{{ proizvod['naziv_proizvoda'] }}</div>
+      <p>{{ proizvod['opis'] }}</p>
+      <p>
+        <strong>Znamka:</strong> {{ proizvod['znamka'] }} &nbsp;|&nbsp;
+        <strong>Kategorija:</strong> {{ proizvod['kategorija'] }}
+        {% if proizvod['koda'] %}&nbsp;|&nbsp; <strong>Koda:</strong> {{ proizvod['koda'] }}{% endif %}
+      </p>
+      <p>
+        <strong>Zaloga:</strong>
+        {% if proizvod['zaloga'] > 0 %}
+          {{ proizvod['zaloga'] }}
+        {% else %}
+          ni na zalogi
+        {% endif %}
+      </p>
+      <p>
+        <strong>Cena:</strong>
+        {% if proizvod['zaloga'] > 0 %}
+          {{ proizvod['cena'] | round(2) }} EUR
+        {% else %}
+          <span class="precrtano">{{ proizvod['cena'] | round(2) }} EUR</span>
+        {% endif %}
+      </p>
+      {% if proizvod['zaloga'] > 0 %}
+        <form method="post" action="{{ url_for('dodaj_v_voziček', proizvod_id=proizvod['product_id']) }}">
+          <label style="display: inline-block; width: 8rem;">
+            Količina:
+            <input type="number" name="kolicina" value="1" min="1" max="{{ proizvod['zaloga'] }}">
+          </label>
+          <button class="gumb" type="submit">Dodaj v voziček</button>
+        </form>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% endblock %}

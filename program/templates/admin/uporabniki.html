@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block naslov %}Uporabniki{% endblock %}
+
+{% block vsebina %}
+  <h1>Uporabniški računi</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Uporabniško ime</th>
+        <th>E-pošta</th>
+        <th>Registriran</th>
+        <th>Naročil</th>
+        <th>Skupna poraba</th>
+        <th>Vloga</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in uporabniki %}
+        <tr>
+          <td>{{ u['uporabnisko_ime'] }}</td>
+          <td>{{ u['email'] or '—' }}</td>
+          <td>{{ u['ustvarjen'] }}</td>
+          <td>{{ u['stevilo_narocil'] }}</td>
+          <td>{{ u['skupna_poraba'] | round(2) }} EUR</td>
+          <td>
+            <form method="post" action="{{ url_for('admin_spremeni_vlogo', user_id=u['user_id']) }}">
+              <select name="vloga" onchange="this.form.submit()">
+                {% for vloga in vloge %}
+                  <option value="{{ vloga }}" {% if vloga == u['vloga'] %}selected{% endif %}>{{ vloga }}</option>
+                {% endfor %}
+              </select>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="prazno">Vloga »trgovec« odpre dostop do tega vmesnika, vloga »kupec« pa samo do strani kupca.</p>
+{% endblock %}

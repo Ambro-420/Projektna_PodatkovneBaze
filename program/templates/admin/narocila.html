@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block naslov %}Zgodovina naročil{% endblock %}
+
+{% block vsebina %}
+  <h1>Zgodovina kupljenih izdelkov</h1>
+
+  {% if narocila %}
+    <table>
+      <thead>
+        <tr>
+          <th>Št.</th>
+          <th>Datum</th>
+          <th>Kupec</th>
+          <th>Artiklov</th>
+          <th>Znesek</th>
+          <th>Status</th>
+          <th>Podrobnosti</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for narocilo in narocila %}
+          <tr>
+            <td>{{ narocilo['order_id'] }}</td>
+            <td>{{ narocilo['datum'] }}</td>
+            <td>{{ narocilo['uporabnisko_ime'] or narocilo['ime_kupca'] or 'Gost' }}</td>
+            <td>{{ narocilo['stevilo_artiklov'] }}</td>
+            <td>{{ narocilo['skupna_cena'] | round(2) }} EUR</td>
+            <td>
+              <form method="post" action="{{ url_for('admin_status_narocila', order_id=narocilo['order_id']) }}">
+                <input type="hidden" name="naprej" value="{{ url_for('admin_narocila') }}">
+                <select name="status" onchange="this.form.submit()">
+                  {% for status in statusi %}
+                    <option value="{{ status }}" {% if status == narocilo['status'] %}selected{% endif %}>{{ status }}</option>
+                  {% endfor %}
+                </select>
+              </form>
+            </td>
+            <td>
+              <a class="gumb gumb--siv gumb--majhen"
+                 href="{{ url_for('admin_narocilo', order_id=narocilo['order_id']) }}">Odpri</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="prazno">Naročil še ni. Preklopi na stran kupca in opravi preizkusni nakup.</p>
+    <a class="gumb gumb--preklop" href="{{ url_for('index') }}">Poglej stran kupca &rarr;</a>
+  {% endif %}
+{% endblock %}

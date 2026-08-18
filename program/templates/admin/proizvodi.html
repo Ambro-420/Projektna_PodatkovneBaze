@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block naslov %}Upravljanje izdelkov{% endblock %}
+
+{% block vsebina %}
+  <h1>Izdelki v trgovini</h1>
+
+  <div class="kartica">
+    <a class="gumb" href="{{ url_for('admin_nov_proizvod') }}">+ Dodaj nov izdelek</a>
+    <span class="prazno">Vpiši naziv, ceno in zalogo – izdelek se takoj pojavi v trgovini.</span>
+  </div>
+
+  <form method="get" class="kartica">
+    <div class="vrstica-polj">
+      <label>
+        Iskanje:
+        <input type="text" name="iskalno" value="{{ iskalno }}" placeholder="Naziv, opis ali koda">
+      </label>
+      <label>
+        Kategorija:
+        <select name="kategorija_id">
+          <option value="">Vse kategorije</option>
+          {% for kategorija in kategorije %}
+            <option value="{{ kategorija['category_id'] }}"
+              {% if izbrana_kategorija and kategorija['category_id']|string == izbrana_kategorija|string %}selected{% endif %}>
+              {{ kategorija['naziv'] }}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>
+        Razvrsti:
+        <select name="sortiraj">
+          <option value="naziv_narascajoce" {% if sortiraj == 'naziv_narascajoce' %}selected{% endif %}>Naziv A–Z</option>
+          <option value="cena_padajoce" {% if sortiraj == 'cena_padajoce' %}selected{% endif %}>Najdražji najprej</option>
+          <option value="zaloga_narascajoce" {% if sortiraj == 'zaloga_narascajoce' %}selected{% endif %}>Najmanjša zaloga najprej</option>
+          <option value="najnovejsi" {% if sortiraj == 'najnovejsi' %}selected{% endif %}>Najnovejši najprej</option>
+        </select>
+      </label>
+      <label style="flex: 0 0 auto; align-self: flex-end;">
+        <button class="gumb gumb--siv" type="submit">Uporabi</button>
+      </label>
+    </div>
+  </form>
+
+  {% if proizvodi %}
+    <table>
+      <thead>
+        <tr>
+          <th>Koda</th>
+          <th>Naziv</th>
+          <th>Kategorija</th>
+          <th>Znamka</th>
+          <th>Cena</th>
+          <th>Zaloga</th>
+          <th>Dopolni</th>
+          <th>Akcije</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for proizvod in proizvodi %}
+          <tr>
+            <td>{{ proizvod['koda'] or '—' }}</td>
+            <td>{{ proizvod['naziv_proizvoda'] }}</td>
+            <td>{{ proizvod['kategorija'] }}</td>
+            <td>{{ proizvod['znamka'] }}</td>
+            <td>{{ proizvod['cena'] | round(2) }} EUR</td>
+            <td>
+              {% if proizvod['zaloga'] == 0 %}
+                <span class="znacka znacka--nevarno">0</span>
+              {% elif proizvod['zaloga'] <= meja_nizke_zaloge %}
+                <span class="znacka znacka--opozorilo">{{ proizvod['zaloga'] }}</span>
+              {% else %}
+                <span class="znacka znacka--ok">{{ proizvod['zaloga'] }}</span>
+              {% endif %}
+            </td>
+            <td>
+              <form method="post" action="{{ url_for('admin_spremeni_zalogo', proizvod_id=proizvod['product_id']) }}">
+                <input type="hidden" name="naprej" value="{{ request.full_path }}">
+                <input type="number" name="sprememba" value="10" style="width: 4.5rem;">
+                <button class="gumb gumb--majhen" type="submit">+</button>
+              </form>
+            </td>
+            <td>
+              <a class="gumb gumb--siv gumb--majhen"
+                 href="{{ url_for('admin_uredi_proizvod', proizvod_id=proizvod['product_id']) }}">Uredi</a>
+              <form method="post" class="vgrajen-obrazec"
+                    action="{{ url_for('admin_izbrisi_proizvod', proizvod_id=proizvod['product_id']) }}"
+                    onsubmit="return confirm('Res želiš izbrisati izdelek {{ proizvod['naziv_proizvoda'] }}?');">
+                <button class="gumb gumb--rdec gumb--majhen" type="submit">Izbriši</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="prazno">Za izbrane pogoje ni izdelkov.</p>
+  {% endif %}
+{% endblock %}

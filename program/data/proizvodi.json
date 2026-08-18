@@ -1,0 +1,403 @@
+{
+  "znamke": [
+    "1001 Cvet",
+    "Ariel",
+    "Astra",
+    "Coca-Cola",
+    "Cockta",
+    "Domestos",
+    "Don Don",
+    "Dove",
+    "Eko Vrt",
+    "Franck",
+    "Fructal",
+    "Frosch",
+    "Haribo",
+    "Kraš",
+    "Ljubljanske mlekarne",
+    "Milka",
+    "Nescafé",
+    "Nivea",
+    "Pekarna Grosuplje",
+    "Persil",
+    "Pomurske mlekarne",
+    "Radenska",
+    "Ritter",
+    "Sadjarstvo Bilje",
+    "Union",
+    "Zelene Doline",
+    "Žito"
+  ],
+  "kategorije": [
+    "Pijača",
+    "Sladkarije",
+    "Kava in čaj",
+    "Kozmetika",
+    "Mlečni izdelki",
+    "Pekovski izdelki",
+    "Sadje in zelenjava",
+    "Čistila"
+  ],
+  "proizvodi": [
+    {
+      "naziv": "Coca-Cola 1.5L",
+      "opis": "Osvežujoče gazirana pijača v veliki plastenki.",
+      "koda": "PIJ-001",
+      "cena": 2.49,
+      "zaloga": 42,
+      "znamka": "Coca-Cola",
+      "kategorija": "Pijača"
+    },
+    {
+      "naziv": "Radenska Classic 1L",
+      "opis": "Naravna mineralna voda s tremi srčki.",
+      "koda": "PIJ-002",
+      "cena": 1.19,
+      "zaloga": 60,
+      "znamka": "Radenska",
+      "kategorija": "Pijača"
+    },
+    {
+      "naziv": "Cockta 0.5L",
+      "opis": "Slovenska pijača z okusom šipka in enajstih zelišč.",
+      "koda": "PIJ-003",
+      "cena": 1.39,
+      "zaloga": 35,
+      "znamka": "Cockta",
+      "kategorija": "Pijača"
+    },
+    {
+      "naziv": "Fructal jabolčni sok 1L",
+      "opis": "Sok iz jabolk brez dodanega sladkorja.",
+      "koda": "PIJ-004",
+      "cena": 1.89,
+      "zaloga": 28,
+      "znamka": "Fructal",
+      "kategorija": "Pijača"
+    },
+    {
+      "naziv": "Union Radler 0.5L",
+      "opis": "Pivo z okusom limone, nizka vsebnost alkohola.",
+      "koda": "PIJ-005",
+      "cena": 1.29,
+      "zaloga": 4,
+      "znamka": "Union",
+      "kategorija": "Pijača"
+    },
+    {
+      "naziv": "Ritter Sport lešnik",
+      "opis": "Čokoladna tablica z celimi lešniki.",
+      "koda": "SLA-001",
+      "cena": 1.79,
+      "zaloga": 30,
+      "znamka": "Ritter",
+      "kategorija": "Sladkarije"
+    },
+    {
+      "naziv": "Ritter Sport marcipan",
+      "opis": "Temna čokolada s polnilom iz marcipana.",
+      "koda": "SLA-002",
+      "cena": 1.99,
+      "zaloga": 22,
+      "znamka": "Ritter",
+      "kategorija": "Sladkarije"
+    },
+    {
+      "naziv": "Milka Alpine Milk 100g",
+      "opis": "Mlečna čokolada iz alpskega mleka.",
+      "koda": "SLA-003",
+      "cena": 1.69,
+      "zaloga": 40,
+      "znamka": "Milka",
+      "kategorija": "Sladkarije"
+    },
+    {
+      "naziv": "Haribo Zlati medvedki 200g",
+      "opis": "Sadni gumijasti bomboni v obliki medvedkov.",
+      "koda": "SLA-004",
+      "cena": 1.49,
+      "zaloga": 25,
+      "znamka": "Haribo",
+      "kategorija": "Sladkarije"
+    },
+    {
+      "naziv": "Kraš Bajadera 300g",
+      "opis": "Praline z nugatom in lešniki v darilni škatli.",
+      "koda": "SLA-005",
+      "cena": 5.99,
+      "zaloga": 0,
+      "znamka": "Kraš",
+      "kategorija": "Sladkarije"
+    },
+    {
+      "naziv": "Astra kava 250g",
+      "opis": "Mleta kava za pripravo klasične domače kave.",
+      "koda": "KAV-001",
+      "cena": 4.49,
+      "zaloga": 16,
+      "znamka": "Astra",
+      "kategorija": "Kava in čaj"
+    },
+    {
+      "naziv": "Nescafé Classic 100g",
+      "opis": "Instant kava za hitro pripravo.",
+      "koda": "KAV-002",
+      "cena": 5.29,
+      "zaloga": 18,
+      "znamka": "Nescafé",
+      "kategorija": "Kava in čaj"
+    },
+    {
+      "naziv": "Franck Jubilarna 500g",
+      "opis": "Mleta kava iz mešanice arabice in robuste.",
+      "koda": "KAV-003",
+      "cena": 7.99,
+      "zaloga": 12,
+      "znamka": "Franck",
+      "kategorija": "Kava in čaj"
+    },
+    {
+      "naziv": "1001 Cvet kamilica",
+      "opis": "Zeliščni čaj iz cvetov kamilice, 20 vrečk.",
+      "koda": "KAV-004",
+      "cena": 2.19,
+      "zaloga": 26,
+      "znamka": "1001 Cvet",
+      "kategorija": "Kava in čaj"
+    },
+    {
+      "naziv": "1001 Cvet gozdni sadeži",
+      "opis": "Sadni čaj z okusom gozdnih sadežev, 20 vrečk.",
+      "koda": "KAV-005",
+      "cena": 2.29,
+      "zaloga": 3,
+      "znamka": "1001 Cvet",
+      "kategorija": "Kava in čaj"
+    },
+    {
+      "naziv": "Nivea krema",
+      "opis": "Vlažilna krema za nego kože.",
+      "koda": "KOZ-001",
+      "cena": 6.99,
+      "zaloga": 18,
+      "znamka": "Nivea",
+      "kategorija": "Kozmetika"
+    },
+    {
+      "naziv": "Nivea deodorant Fresh",
+      "opis": "Deodorant v pršilu z 48-urno zaščito.",
+      "koda": "KOZ-002",
+      "cena": 3.49,
+      "zaloga": 24,
+      "znamka": "Nivea",
+      "kategorija": "Kozmetika"
+    },
+    {
+      "naziv": "Nivea Men gel za britje",
+      "opis": "Gel za britje za občutljivo kožo.",
+      "koda": "KOZ-003",
+      "cena": 4.29,
+      "zaloga": 15,
+      "znamka": "Nivea",
+      "kategorija": "Kozmetika"
+    },
+    {
+      "naziv": "Dove milo 100g",
+      "opis": "Kremno milo z vlažilnim učinkom.",
+      "koda": "KOZ-004",
+      "cena": 1.59,
+      "zaloga": 38,
+      "znamka": "Dove",
+      "kategorija": "Kozmetika"
+    },
+    {
+      "naziv": "Dove šampon 250ml",
+      "opis": "Šampon za suhe in poškodovane lase.",
+      "koda": "KOZ-005",
+      "cena": 3.99,
+      "zaloga": 20,
+      "znamka": "Dove",
+      "kategorija": "Kozmetika"
+    },
+    {
+      "naziv": "Alpsko mleko 1L",
+      "opis": "Trajno polnomastno mleko z 3.5 % maščobe.",
+      "koda": "MLE-001",
+      "cena": 1.09,
+      "zaloga": 55,
+      "znamka": "Ljubljanske mlekarne",
+      "kategorija": "Mlečni izdelki"
+    },
+    {
+      "naziv": "Ljubljanske mlekarne maslo 250g",
+      "opis": "Sveže maslo za peko in namaz.",
+      "koda": "MLE-002",
+      "cena": 3.29,
+      "zaloga": 14,
+      "znamka": "Ljubljanske mlekarne",
+      "kategorija": "Mlečni izdelki"
+    },
+    {
+      "naziv": "Zelene Doline jogurt 500g",
+      "opis": "Naravni beli jogurt brez dodanega sladkorja.",
+      "koda": "MLE-003",
+      "cena": 1.49,
+      "zaloga": 32,
+      "znamka": "Zelene Doline",
+      "kategorija": "Mlečni izdelki"
+    },
+    {
+      "naziv": "Zelene Doline sir edamec 300g",
+      "opis": "Poltrdi sir, narezan na rezine.",
+      "koda": "MLE-004",
+      "cena": 3.79,
+      "zaloga": 17,
+      "znamka": "Zelene Doline",
+      "kategorija": "Mlečni izdelki"
+    },
+    {
+      "naziv": "Pomurske mlekarne skuta 500g",
+      "opis": "Pusta skuta, primerna za pecivo in zajtrk.",
+      "koda": "MLE-005",
+      "cena": 2.09,
+      "zaloga": 2,
+      "znamka": "Pomurske mlekarne",
+      "kategorija": "Mlečni izdelki"
+    },
+    {
+      "naziv": "Žito polnozrnati kruh 500g",
+      "opis": "Kruh iz polnozrnate moke, pečen istega dne.",
+      "koda": "PEK-001",
+      "cena": 2.19,
+      "zaloga": 20,
+      "znamka": "Žito",
+      "kategorija": "Pekovski izdelki"
+    },
+    {
+      "naziv": "Žito burek s sirom",
+      "opis": "Vlečeno testo s polnilom iz sira.",
+      "koda": "PEK-002",
+      "cena": 2.89,
+      "zaloga": 11,
+      "znamka": "Žito",
+      "kategorija": "Pekovski izdelki"
+    },
+    {
+      "naziv": "Don Don rogljiček s čokolado",
+      "opis": "Maslen rogljiček s čokoladnim polnilom.",
+      "koda": "PEK-003",
+      "cena": 0.99,
+      "zaloga": 45,
+      "znamka": "Don Don",
+      "kategorija": "Pekovski izdelki"
+    },
+    {
+      "naziv": "Don Don krof",
+      "opis": "Klasičen krof z marmeladnim polnilom.",
+      "koda": "PEK-004",
+      "cena": 1.19,
+      "zaloga": 0,
+      "znamka": "Don Don",
+      "kategorija": "Pekovski izdelki"
+    },
+    {
+      "naziv": "Pekarna Grosuplje bela štruca",
+      "opis": "Mehka bela štruca za vsakdanjo uporabo.",
+      "koda": "PEK-005",
+      "cena": 1.69,
+      "zaloga": 23,
+      "znamka": "Pekarna Grosuplje",
+      "kategorija": "Pekovski izdelki"
+    },
+    {
+      "naziv": "Eko Vrt jabolka 1kg",
+      "opis": "Domača jabolka sorte zlati delišes.",
+      "koda": "SAD-001",
+      "cena": 1.99,
+      "zaloga": 40,
+      "znamka": "Eko Vrt",
+      "kategorija": "Sadje in zelenjava"
+    },
+    {
+      "naziv": "Eko Vrt krompir 2kg",
+      "opis": "Beli krompir, primeren za kuhanje in peko.",
+      "koda": "SAD-002",
+      "cena": 2.59,
+      "zaloga": 30,
+      "znamka": "Eko Vrt",
+      "kategorija": "Sadje in zelenjava"
+    },
+    {
+      "naziv": "Eko Vrt paradižnik 500g",
+      "opis": "Sveži paradižnik iz slovenskih rastlinjakov.",
+      "koda": "SAD-003",
+      "cena": 2.29,
+      "zaloga": 18,
+      "znamka": "Eko Vrt",
+      "kategorija": "Sadje in zelenjava"
+    },
+    {
+      "naziv": "Sadjarstvo Bilje breskve 1kg",
+      "opis": "Sočne breskve iz Vipavske doline.",
+      "koda": "SAD-004",
+      "cena": 3.19,
+      "zaloga": 5,
+      "znamka": "Sadjarstvo Bilje",
+      "kategorija": "Sadje in zelenjava"
+    },
+    {
+      "naziv": "Sadjarstvo Bilje hruške 1kg",
+      "opis": "Hruške sorte viljamovka.",
+      "koda": "SAD-005",
+      "cena": 2.79,
+      "zaloga": 13,
+      "znamka": "Sadjarstvo Bilje",
+      "kategorija": "Sadje in zelenjava"
+    },
+    {
+      "naziv": "Frosch čistilo za okna 500ml",
+      "opis": "Ekološko čistilo brez packanja.",
+      "koda": "CIS-001",
+      "cena": 2.99,
+      "zaloga": 21,
+      "znamka": "Frosch",
+      "kategorija": "Čistila"
+    },
+    {
+      "naziv": "Frosch detergent za posodo 750ml",
+      "opis": "Detergent za ročno pomivanje z izvlečkom limone.",
+      "koda": "CIS-002",
+      "cena": 3.39,
+      "zaloga": 19,
+      "znamka": "Frosch",
+      "kategorija": "Čistila"
+    },
+    {
+      "naziv": "Ariel pralni prašek 3kg",
+      "opis": "Pralni prašek za belo perilo, 40 pranj.",
+      "koda": "CIS-003",
+      "cena": 12.99,
+      "zaloga": 9,
+      "znamka": "Ariel",
+      "kategorija": "Čistila"
+    },
+    {
+      "naziv": "Persil gel 1.5L",
+      "opis": "Tekoči detergent za barvno perilo.",
+      "koda": "CIS-004",
+      "cena": 9.49,
+      "zaloga": 12,
+      "znamka": "Persil",
+      "kategorija": "Čistila"
+    },
+    {
+      "naziv": "Domestos 750ml",
+      "opis": "Razkužilo in čistilo za sanitarije.",
+      "koda": "CIS-005",
+      "cena": 2.69,
+      "zaloga": 27,
+      "znamka": "Domestos",
+      "kategorija": "Čistila"
+    }
+  ]
+}
